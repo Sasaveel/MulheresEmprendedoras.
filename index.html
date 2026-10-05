@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulheres Empreendedoras da Gastronomia de MS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-game {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        /* Ocultar barra de rolagem padrão preservando scroll */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Cartazes Verticais dos Flyers */
+        .flyer-card {
+            height: min(580px, calc(78vh - 80px));
+            min-height: 440px;
+            width: calc((100% - 3rem) / 3);
+            min-width: 280px;
+            aspect-ratio: 9 / 16;
+            transition: transform 0.2s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .flyer-card {
+                width: calc((100% - 1.5rem) / 2);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .flyer-card {
+                width: 88%;
+            }
+        }
+
+        .carousel-container {
+            scroll-behavior: smooth;
+        }
+
+        /* Estilos do Tabuleiro do Jogo */
+        .board-tile {
+            transition: transform 0.2s ease, background-color 0.2s;
+        }
+
+        .board-tile.active-playable {
+            transform: scale(1.02);
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-tile.completed {
+            background-color: #10b981 !important;
+            border-color: #059669 !important;
+            color: white !important;
+        }
+
+        .board-tile.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+            filter: grayscale(0.6);
+        }
+
+        /* Animações de Troca de Página SPA */
+        .page-view {
+            transition: opacity 0.2s ease;
+        }
+        
+        .page-view.hidden-page {
+            display: none !important;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-pink-100 selection:text-pink-600">
+
+    <!-- NAV BAR GLOBAL SUPREMA -->
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            <!-- Logo & Marca -->
+            <a href="#home" onclick="navigateTo('home')" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-600 to-purple-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-utensils text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-base sm:text-lg text-gray-900 tracking-tight block leading-none group-hover:text-pink-600 transition-colors">
+                        Mulheres Empreendedoras
+                    </span>
+                    <span class="text-[11px] text-pink-600 font-semibold tracking-wider uppercase">Gastronomia MS</span>
+                </div>
+            </a>
+
+            <!-- Links Principais de Navegação entre Páginas -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Botão Vitrine Principal -->
+                <button id="nav-btn-home" onclick="navigateTo('home')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 bg-pink-50 text-pink-700 border border-pink-200">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Vitrine & Trilha</span>
+                </button>
+
+                <!-- Botão Teste de Aptidão (PÁGINA DEDICADA SEPARADA) -->
+                <button id="nav-btn-teste" onclick="navigateTo('teste')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 bg-amber-400 hover:bg-amber-300 text-amber-950 shadow-sm">
+                    <i class="fa-solid fa-clipboard-question text-base"></i>
+                    <span class="hidden sm:inline">Página do</span>
+                    <span>Teste de Aptidão</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- PÁGINA 1: VITRINE DE EMPREENDEDORAS & TRILHA DO APRENDIZADO -->
+    <!-- ========================================================================= -->
+    <div id="page-home" class="page-view flex flex-1 flex-col animate-fade-in">
+
+        <!-- BANNER DE BOAS-VINDAS / HERO DA PÁGINA PRINCIPAL -->
+        <header class="w-full bg-gradient-to-r from-pink-600 via-rose-600 to-purple-700 text-white relative overflow-hidden py-10 sm:py-14">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                
+                <span class="inline-block bg-white/20 backdrop-blur-md text-pink-100 text-xs font-bold px-4 py-1.5 rounded-full border border-white/25 uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-heart mr-1.5 text-pink-300"></i> Protagonismo Feminino em MS
+                </span>
+
+                <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                    Sabores, Histórias e Negócios das <br class="hidden sm:block">
+                    <span class="text-amber-300">Mulheres da Gastronomia de MS</span>
+                </h1>
+
+                <p class="text-xs sm:text-base text-pink-100 max-w-2xl mx-auto mt-3 leading-relaxed">
+                    Conheça as histórias inspiradoras das empreendedoras locais, explore seus produtos artesanais e teste seus conhecimentos sobre a cultura gastronomica sul-mato-grossense na nossa Trilha Interativa!
+                </p>
+
+                <!-- Atalhos Rápidos da Página Principal -->
+                <div class="mt-6 flex flex-wrap justify-center items-center gap-3">
+                    <a href="#vitrine" class="bg-white text-pink-700 hover:bg-pink-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Explorar Vitrine (9 Empreendedoras)</span>
+                    </a>
+                    <a href="#trilha" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-gamepad text-base"></i>
+                        <span>Jogar Trilha do Aprendizado</span>
+                    </a>
+                </div>
+
+                <!-- Chamada Exclusiva para a Página Separada do Teste -->
+                <div class="mt-6 pt-5 border-t border-white/15 max-w-xl mx-auto flex items-center justify-between bg-black/15 rounded-2xl p-3.5 px-5">
+                    <div class="text-left">
+                        <span class="text-xs font-bold text-amber-200 block">Quer saber se você tem perfil empreendedor?</span>
+                        <span class="text-[11px] text-pink-100 block">Acesse a nossa página exclusiva do Teste de Aptidão</span>
+                    </div>
+                    <button onclick="navigateTo('teste')" class="bg-amber-300 hover:bg-white text-amber-950 font-extrabold px-4 py-2 rounded-xl text-xs transition-colors flex-shrink-0 ml-3">
+                        Acessar Teste <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- SEÇÃO 1: VITRINE DE EMPREENDEDORAS (9 FLYERS VERTICAIS) -->
+        <section id="vitrine" class="max-w-7xl mx-auto w-full px-4 py-10 sm:py-14">
+            
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-3 py-1 rounded-full border border-pink-100">
+                    Vitrine de Talentos
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mt-2">
+                    Nossas Empreendedoras da Gastronomia
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 mt-2 max-w-xl mx-auto">
+                    Conheça as mulheres que transformam ingredientes da nossa terra em histórias de sucesso por todo o Mato Grosso do Sul.
+                </p>
+            </div>
+
+            <!-- Controles do Carrossel -->
+            <div class="flex justify-end items-center mb-4 space-x-2 max-w-6xl mx-auto px-2">
+                <button onclick="scrollCarousel(-1)" class="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm text-gray-700 hover:bg-pink-50 hover:text-pink-600 flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+                <button onclick="scrollCarousel(1)" class="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm text-gray-700 hover:bg-pink-50 hover:text-pink-600 flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+
+            <!-- CARROSSEL DOS 9 FLYERS VERTICAIS -->
+            <div id="carousel" class="carousel-container flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar py-2 px-2 items-center justify-start">
+                <!-- Injetados dinamicamente via JS (Flyers 1 ao 9) -->
+            </div>
+
+            <div class="flex items-center justify-center space-x-2 text-xs text-gray-400 mt-4">
+                <i class="fa-solid fa-hand-pointer text-pink-500"></i>
+                <span>Deslize horizontalmente para ver todas as 9 empreendedoras</span>
+            </div>
+
+        </section>
+
+        <!-- SEÇÃO 2: TRILHA DO APRENDIZADO (JOGO TABULEIRO 14 CASAS) -->
+        <section id="trilha" class="bg-gradient-to-b from-amber-500 via-pink-600 to-purple-800 text-white py-12 sm:py-16 px-4 relative overflow-hidden shadow-2xl">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Cabeçalho do Jogo -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/20 shadow-lg">
+                    <div class="text-center md:text-left max-w-xl">
+                        <span class="bg-amber-300 text-amber-950 font-game text-xs font-bold uppercase px-3.5 py-1 rounded-full tracking-wider shadow-sm inline-block mb-2">
+                            <i class="fa-solid fa-gamepad mr-1"></i> Desafio Cultural
+                        </span>
+                        <h2 class="text-2xl sm:text-4xl font-game font-extrabold tracking-tight text-white drop-shadow-md">
+                            TRILHA DO APRENDIZADO
+                        </h2>
+                        <p class="text-pink-100 text-xs sm:text-sm mt-2 leading-relaxed">
+                            Responda corretamente às perguntas sobre a gastronomia e tradições de Mato Grosso do Sul para desbloquear sequencialmente do nível 1 ao 14!
+                        </p>
+                    </div>
+
+                    <!-- Indicador de Progresso do Jogo -->
+                    <div class="bg-black/30 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center min-w-[220px] shadow-inner">
+                        <span class="text-xs uppercase font-bold text-amber-300 tracking-wider">Casas Desbloqueadas</span>
+                        <div class="text-3xl font-game font-bold text-white mt-1" id="game-progress-text">1 / 14</div>
+                        <div class="w-full bg-black/40 rounded-full h-3 mt-2 overflow-hidden border border-white/20">
+                            <div id="game-progress-bar" class="bg-gradient-to-r from-amber-300 to-emerald-400 h-full w-[7.14%] transition-all duration-500"></div>
+                        </div>
+                        <button onclick="resetGameProgress()" class="mt-3 text-[11px] text-pink-200 hover:text-white underline opacity-80 hover:opacity-100 transition-opacity flex items-center justify-center mx-auto space-x-1">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Reiniciar Progresso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABULEIRO DAS 14 CASAS -->
+                <div class="bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900 rounded-3xl p-6 sm:p-8 border-4 border-amber-300 shadow-xl relative">
+                    
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-amber-200">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <span class="font-game font-bold text-amber-900 text-sm sm:text-base">Caminho da Gastronomia MS</span>
+                        </div>
+                        <span class="text-xs text-amber-900 bg-amber-200 font-bold px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-trophy text-amber-700 mr-1"></i> 14 Etapas
+                        </span>
+                    </div>
+
+                    <!-- Grade de Casas (1 a 14) -->
+                    <div id="game-board-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 relative z-10">
+                        <!-- Gerado via JavaScript -->
+                    </div>
+
+                    <!-- Banner de Vitória -->
+                    <div id="victory-banner" class="hidden mt-8 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-6 text-center shadow-lg border-2 border-emerald-300">
+                        <div class="text-4xl mb-2">🎉🏆✨</div>
+                        <h3 class="text-2xl font-game font-bold">PARABÉNS! VOCÊ COMPLETOU A TRILHA!</h3>
+                        <p class="text-xs sm:text-sm text-emerald-100 mt-1 max-w-lg mx-auto">
+                            Você domina os sabores, segredos e a riqueza cultural do Mato Grosso do Sul!
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO INSPIRACIONAL - VALORIZAÇÃO DO EMPREENDEDORISMO FEMININO -->
+        <section class="py-10 px-4 max-w-5xl mx-auto w-full">
+            <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-100 rounded-3xl p-6 sm:p-8 border border-pink-200 text-center sm:text-left sm:flex items-center justify-between shadow-sm">
+                <div>
+                    <span class="bg-pink-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Valorização & Identidade</span>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-900 mt-1">Conheça, Aplauda e Inspire-se</h3>
+                    <p class="text-gray-600 mt-1 text-xs sm:text-sm max-w-xl">
+                        Nossa missão é dar visibilidade ao protagonismo feminino na gastronomia de Mato Grosso do Sul, preservando receitas tradicionais e promovendo a autonomia das mulheres da nossa terra.
+                    </p>
+                </div>
+                <div class="mt-5 sm:mt-0 flex-shrink-0">
+                    <div class="inline-flex items-center space-x-2 bg-pink-600 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-md">
+                        <i class="fa-solid fa-heart text-amber-300 text-base"></i>
+                        <span>Orgulho Sul-Mato-Grossense</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- FIM DA PÁGINA 1 -->
+
+    <!-- ========================================================================= -->
+    <!-- PÁGINA 2: PÁGINA TOTALMENTE DEDICADA - TESTE DE APTIDÃO EMPREENDEDORA -->
+    <!-- ========================================================================= -->
+    <div id="page-teste" class="page-view hidden-page flex flex-1 flex-col animate-fade-in bg-slate-100 min-h-screen py-8 sm:py-12">
+        
+        <main class="flex-1 max-w-4xl mx-auto w-full px-4">
+            
+            <!-- CABEÇALHO DEDICADO DA PÁGINA DO TESTE -->
+            <div class="mb-6 flex items-center justify-between">
+                <button onclick="navigateTo('home')" class="text-gray-600 hover:text-pink-700 bg-white hover:bg-pink-50 border border-gray-200 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-2xl shadow-sm transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Voltar para a Vitrine & Trilha</span>
+                </button>
+
+                <span class="text-xs font-semibold text-gray-500 bg-white px-3 py-1.5 rounded-xl border border-gray-200 shadow-sm">
+                    Página Independente • Diagnóstico 2026
+                </span>
+            </div>
+
+            <!-- CONTAINER CENTRAL DO QUESTIONÁRIO SEPARADO -->
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-pink-100 relative">
+                
+                <div class="text-center mb-8 border-b border-gray-100 pb-6">
+                    <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-pink-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md">
+                        <i class="fa-solid fa-clipboard-question text-3xl"></i>
+                    </div>
+
+                    <span class="bg-amber-100 text-amber-900 text-xs font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        Avaliação de Perfil Empreendedor
+                    </span>
+                    
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mt-3">
+                        Teste de Aptidão Empreendedora
+                    </h1>
+                    
+                    <p class="text-gray-600 mt-2 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+                        Este teste foi desenhado especialmente para avaliar o potencial de gestão, perfil de liderança e resiliência no mercado de gastronomia de Mato Grosso do Sul. Responda às perguntas abaixo!
+                    </p>
+                </div>
+
+                <!-- FORMULÁRIO COMPLETO COM PERGUNTAS EXTENDIDAS -->
+                <form id="aptitude-form" onsubmit="calculateAptitude(event)" class="space-y-6">
+                    
+                    <!-- Pergunta 1 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Ao planejar o cardápio do seu negócio gastronômico, qual é o seu principal ponto de atenção em relação aos custos?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Gestão e Ficha Técnica</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q1" value="1" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Focar exclusivamente na qualidade dos ingredientes, definindo o preço final com base no mercado concorrente.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q1" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Calcular os custos diretos e indiretos por meio de fichas técnicas detalhadas para determinar a margem de lucro e o preço final.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q1" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Apenas somar o valor pago nos insumos e multiplicar por três para cobrir despesas e lucro.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q1" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Ajustar os preços conforme a demanda do dia a dia, sem necessidade de precificação fixa.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 2 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Como você lida com as exigências sanitárias (Anvisa) e as boas práticas de manipulação de alimentos?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Vigilância Sanitária e Regulamentação</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q2" value="3" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Implemento processos rigorosos de armazenamento, rotulagem e treinamento contínuo para garantir conformidade e segurança alimentar.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q2" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Sigo apenas as orientações básicas quando há previsão de fiscalização no estabelecimento.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q2" value="1" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Delego a responsabilidade inteiramente aos auxiliares de cozinha, sem monitoramento sistemático.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q2" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Considero as normas burocráticas demais e prefiro focar apenas na agilidade do atendimento.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 3 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">O setor de alimentação possui forte sazonalidade e alto giro de estoque. Como você organiza a gestão financeira da empresa?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Planejamento Financeiro e Fluxo de Caixa</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q3" value="1" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Misturo as contas pessoais e da empresa no início para simplificar os pagamentos.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q3" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Mantenho um controle rigoroso de fluxo de caixa, separando o pro-labore e prevendo reservas de emergência para períodos de baixa.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q3" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Reinvisto 100% do faturamento diário na compra de novos equipamentos sem projetar os custos fixos do próximo mês.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q3" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Acompanho o saldo bancário ao final do mês para verificar se houve sobra ou prejuízo.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 4 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">A rotina na gastronomia exige rapidez e resolução sob pressão. Qual é o seu estilo de liderança em momentos de alta demanda?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Gestão de Equipe e Liderança na Cozinha</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q4" value="3" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Mantenho comunicação clara, processos predefinidos e feedback constante para manter a brigada alinhada e motivada.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q4" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Assumo a execução de todas as tarefas para garantir que tudo saia perfeito, mesmo sobrecarregando a mim mesma.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q4" value="1" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Deixo que a equipe resolva os problemas operacionais sozinha para evitar conflitos na cozinha.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q4" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Centralizo as decisões e imponho ordens sem explicar o porquê dos processos aos colaboradores.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 5 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">O que você considera mais determinante para a fidelização de clientes em um negócio gastronômico?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Experiência do Cliente e Identidade de Marca</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q5" value="0" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Apenas oferecer o menor preço da região.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q5" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">A combinação de consistência no sabor, excelente atendimento e uma proposta de valor bem definida que gera conexão.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q5" value="1" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Fazer grandes investimentos em publicidade, independentemente da padronização do prato.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q5" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Mudar o cardápio com frequência quinzenal para testar novas tendências do mercado.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 6 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Ingredientes perecíveis exigem controle de estoque constante. Qual estratégia você utiliza para evitar desperdícios?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Logística e Gestão de Estoque</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q6" value="1" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Compro grandes quantidades de insumos perecíveis para obter descontos com fornecedores, sem prever o giro.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q6" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Aplico a metodologia PVPS (Primeiro que Vence, Primeiro que Sai) e realizo inventários periódicos alinhados à previsão de vendas.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q6" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Compro apenas o necessário no dia, fazendo compras diárias em varejistas sem negociação de atacado.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q6" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Descarto o excesso ao final da semana sem registrar as perdas no controle financeiro.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 7 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">7</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">De que forma você integra canais digitais (redes sociais, delivery próprio ou aplicativos) ao seu modelo de negócio?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Inovação e Posicionamento Digital</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q7" value="2" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Utilizo as redes apenas como vitrine esporádica de fotos dos pratos.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q7" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Desenvolvo estratégias de marketing digital, monitoro métricas de atração e otimizo a embalagem/entrega para manter a qualidade no delivery.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q7" value="1" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Dependo exclusivamente do movimento de clientes presenciais na fachada da loja.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q7" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Cadastro a loja em aplicativos de entrega sem adequar o cardápio ou o custo das taxas da plataforma.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 8 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">8</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Como você gerencia o relacionamento e a dependência de fornecedores de insumos essenciais?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Fornecedores e Parcerias Estratégicas</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q8" value="2" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Trabalho com um único fornecedor exclusivo para todos os itens para facilitar o faturamento.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q8" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Mantenho uma rede diversificada de fornecedores homologados, negociando prazos e prevendo planos de contingência em caso de escassez.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q8" value="1" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Compro insumos no supermercado mais próximo no momento em que os ingredientes acabam durante o serviço.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q8" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Aceito reajustes de preços dos fornecedores sem realizar cotações periódicas no mercado.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 9 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">9</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Como você reage quando um cliente insatisfeito reclama publicamente da qualidade de um prato ou do tempo de espera?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Resiliência e Resolução de Problemas</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q9" value="1" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Ignoro o comentário para não dar visibilidade negativa à marca.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q9" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Escuto com empatia, resolvo o problema de imediato e analiso a falha no processo interno para evitar reincidência.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q9" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Respondo justificando que a culpa foi da alta demanda ou da falta de insumos no dia.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q9" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Banindo ou excluindo a avaliação do cliente das redes sociais do estabelecimento.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 10 -->
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-pink-300 transition-colors">
+                        <div class="flex items-start space-x-3 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-pink-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">10</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm sm:text-base">Qual é a sua perspectiva sobre o crescimento a longo prazo do seu negócio gastronômico?</h3>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Visão Estratégica e Escala</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 text-xs sm:text-sm pl-0 sm:pl-10">
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q10" value="1" required class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Apenas manter o negócio funcionando sem a necessidade de registrar processos ou padronizar receitas.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q10" value="3" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Estruturar manuais operacionais (POP), padronizar receitas e monitorar indicadores (KPIs) para permitir expansão e delegar a operação.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q10" value="2" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Trabalhar continuamente na operação diária sem tempo para analisar métricas financeiras ou planejamento futuro.</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3.5 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-pink-400 hover:bg-pink-50/50 transition-all">
+                                <input type="radio" name="q10" value="0" class="text-pink-600 focus:ring-pink-500 w-4 h-4">
+                                <span class="text-gray-700">Expandir para novos pontos comerciais sem consolidação da marca ou estabilidade financeira da matriz.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botão Submeter Form -->
+                    <div class="pt-4 text-center">
+                        <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-extrabold text-sm sm:text-base px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-chart-line mr-2"></i> Ver Meu Diagnóstico Empreendedor
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </main>
+    </div> <!-- FIM DA PÁGINA 2 -->
+
+    <!-- MODAL DE QUIZ DA TRILHA -->
+    <div id="quiz-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-pink-100 relative animate-fade-in">
+            <button onclick="closeQuizModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 rounded-2xl bg-amber-400 text-amber-950 font-game font-bold flex items-center justify-center text-lg" id="modal-tile-num">
+                    1
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-pink-600 uppercase tracking-wider block">Desafio Regional MS</span>
+                    <h3 class="font-game font-bold text-gray-900 text-lg" id="modal-tile-title">Pergunta da Etapa</h3>
+                </div>
+            </div>
+            
+            <p class="text-gray-700 text-sm mb-6 leading-relaxed bg-amber-50 p-4 rounded-2xl border border-amber-200" id="modal-question-text">
+                Texto da pergunta...
+            </p>
+
+            <div class="space-y-3" id="modal-options-container">
+                <!-- Opções injetadas via JS -->
+            </div>
+            <p id="quiz-feedback" class="mt-4 text-xs text-center font-bold hidden"></p>
+        </div>
+    </div>
+
+    <!-- MODAL DE RESULTADO DO TESTE DE APTIDÃO -->
+    <div id="result-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-pink-200 relative animate-fade-in text-center">
+            <button onclick="closeResultModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center text-3xl shadow-lg mb-4" id="result-icon">
+                <i class="fa-solid fa-award"></i>
+            </div>
+
+            <span class="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-3 py-1 rounded-full border border-pink-100">
+                Resultado do Seu Diagnóstico
+            </span>
+
+            <h3 class="text-2xl font-extrabold text-gray-900 mt-2" id="result-title">
+                Perfil Empreendedor
+            </h3>
+
+            <div class="text-4xl font-black text-pink-600 my-3" id="result-score">
+                15 / 15
+            </div>
+
+            <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left" id="result-description">
+                Descrição do resultado...
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button onclick="closeResultModal(); navigateTo('home')" class="bg-pink-600 hover:bg-pink-700 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-store mr-1.5"></i> Conhecer Nossas Empreendedoras
+                </button>
+                <button onclick="closeResultModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-6 py-3 rounded-xl text-xs sm:text-sm transition-all">
+                    Fechar Diagnóstico
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HUD DE DETALHES DA EMPREENDEDORA (VER MAIS) -->
+    <div id="entrepreneur-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-pink-200 relative animate-fade-in hide-scrollbar">
+            
+            <!-- Botão Fechar -->
+            <button onclick="closeEntrepreneurModal()" class="absolute top-4 right-4 z-20 text-white bg-black/40 hover:bg-black/70 w-9 h-9 rounded-full flex items-center justify-center transition-all backdrop-blur-sm">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Banner do Cabeçalho com Foto e Gradiente -->
+            <div class="relative h-48 sm:h-60 w-full bg-slate-800 overflow-hidden">
+                <img id="modal-emp-foto" src="" alt="Foto do Negócio" class="w-full h-full object-cover opacity-90 transition-all duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+                
+                <div class="absolute bottom-4 left-4 right-4 text-white z-10">
+                    <div class="flex items-center space-x-2 mb-1.5">
+                        <span id="modal-emp-cidade" class="bg-pink-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-0.5 rounded-full border border-pink-400/30">
+                            <i class="fa-solid fa-location-dot mr-1"></i> Cidade
+                        </span>
+                    </div>
+                    <h2 id="modal-emp-negocio" class="text-2xl sm:text-3xl font-extrabold tracking-tight drop-shadow-md">
+                        Nome do Negócio
+                    </h2>
+                    <p id="modal-emp-nome" class="text-pink-200 text-xs sm:text-sm font-medium">
+                        Por: Nome da Proprietária
+                    </p>
+                </div>
+            </div>
+
+            <!-- Corpo dos Detalhes -->
+            <div class="p-6 sm:p-7 space-y-5">
+
+                <!-- História e Trajetória -->
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-gray-400 mb-2 flex items-center">
+                        <i class="fa-solid fa-book-open text-pink-600 mr-2"></i> História & Trajetória
+                    </h3>
+                    <p id="modal-emp-historia" class="text-xs sm:text-sm text-gray-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        História completa do empreendimento...
+                    </p>
+                </div>
+
+                <!-- Presença Digital & Rede Social -->
+                <div class="pt-3 border-t border-gray-100">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs">
+                        <span class="text-gray-400 font-bold block text-[10px] uppercase tracking-wider">Presença Digital</span>
+                        <span id="modal-emp-instagram" class="font-bold text-pink-600 text-sm mt-0.5 block"><i class="fa-brands fa-instagram mr-1"></i> @usuario</span>
+                    </div>
+                </div>
+
+                <!-- Ações do Modal -->
+                <div class="pt-1">
+                    <button onclick="closeEntrepreneurModal()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-extrabold py-3.5 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                        Fechar Visualização
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER GLOBAL -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4 border-t border-gray-800 text-center text-xs">
+        <div class="max-w-5xl mx-auto space-y-3">
+            <div class="flex justify-center items-center space-x-2 text-white font-bold">
+                <i class="fa-solid fa-utensils text-pink-500"></i>
+                <span>Mulheres Empreendedoras da Gastronomia de MS</span>
+            </div>
+            <p>Incentivando a autonomia, cultura e sabor sul-mato-grossense • 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dados das 9 Empreendedoras de MS (Flyers)
+        const flyersData = [
+            {
+                nome: "Carol Delboni",
+                negocio: "Carol Delboni Doceria",
+                cidade: "Três Lagoas - MS",
+                prato: "Doces Artesanais",
+                desc: "Produção artesanal com qualidade e propósito de tornar momentos especiais.",
+                cor: "from-amber-500 to-rose-600",
+                icone: "fa-cookie",
+                foto: "carol2.png",
+                fotoCard: "carol1.png",
+                historia: "Sou Carol Delboni, empreendedora na Gastronomia há mais de 13 anos. Filha e neta de comerciantes, iniciei na confeitaria após deixar a CLT e abrir uma pequena loja de doces. Busquei conhecimento, passei a produzir meus próprios produtos e, com o crescimento das encomendas, transformei o negócio na Carol Delboni Doceria. Hoje, trabalho com produção artesanal, qualidade e o propósito de tornar momentos especiais.",
+                especialidades: ["Doces Artesanais", "Biscoitos Decorados", "Bolos Festivos"],
+                instagram: "@caroldelbonidoceria"
+            },
+            {
+                nome: "Ana Maria Braga",
+                negocio: "Cantinho do Sobá",
+                cidade: "Campo Grande - MS",
+                prato: "Sobá Tradicional Feito na Hora",
+                desc: "Patrimônio Cultural da capital com caldo caseiro puríssimo.",
+                cor: "from-pink-600 to-purple-600",
+                icone: "fa-bowl-rice",
+                foto: "anamaria1.png",
+                fotoCard: "anamaria1.png",
+                historia: "Ana Maria transformou sua paixão pela cozinha em uma oportunidade de empreender. Começou preparando suas receitas com carinho para pessoas próximas e, aos poucos, percebeu que aquilo que fazia com amor também poderia se tornar seu negócio. Sua história mostra que não é preciso começar grande para realizar um sonho. Com coragem, dedicação e vontade de aprender, toda mulher pode transformar seu talento em uma oportunidade de negócio.",
+                especialidades: ["Sobá de Carne Bovina Especial", "Yakisoba da Feirona", "Suco Natural de Guavira"],
+                instagram: "@anamariabragaoficial"
+            },
+            {
+                nome: "Erika Moreiro",
+                negocio: "Empório Guavira",
+                cidade: "Bonito - MS",
+                prato: "Geleia & Licor de Guavira",
+                desc: "Valorização das frutas nativas do Pantanal e Cerrado de MS.",
+                cor: "from-emerald-600 to-teal-700",
+                icone: "fa-jar",
+                foto: "erika2.png",
+                fotoCard: "erika1.jpg",
+                historia: "Minha história com a gastronomia começou em 2013, quando decidi deixar o trabalho CLT para empreender, após o nascimento da minha filha Loren. Comecei produzindo cestas de café da manhã, bolos e doces, e, com dedicação e persistência, transformei essa atividade em meu negócio e em parte da minha identidade.",
+                especialidades: ["Geleia Artesanal de Guavira", "Licor Fino de Baru", "Chutney de Pequi com Pimenta"],
+                instagram: "@erikamoreiragastronomia"
+            },
+            {
+                nome: "Rita Lobo",
+                negocio: "Delícias de Maracaju",
+                cidade: "Maracaju - MS",
+                prato: "Linguiça de Maracaju Tradicional",
+                desc: "Cortes nobres com tempero secreto da culinária de festa.",
+                cor: "from-red-600 to-amber-600",
+                icone: "fa-drumstick-bite",
+                foto: "lobo2.png",
+                fotoCard: "lobo1.png",
+                historia: "Rita Lobo transformou seu interesse por culinária e comunicação em um projeto que se tornou referência na cozinha brasileira. Criadora do Panelinha, ela começou compartilhando receitas e conhecimentos sobre alimentação e, com dedicação e criatividade, construiu uma trajetória empreendedora no universo da gastronomia.",
+                especialidades: ["Linguiça de Maracaju Tradicional", "Farofa Crocante de Mandioca", "Espetinho Caipira Temperado"],
+                instagram: "@ritalobo"
+            },
+            {
+                nome: "Lourdes Neres",
+                negocio: "Doces do Pantanal",
+                cidade: "Três Lagoas - MS",
+                prato: "Doce de Jaracatiá e Pequi",
+                desc: "Receitas de tacho preservando a tradição ribeirinha pantaneira.",
+                cor: "from-purple-600 to-indigo-700",
+                icone: "fa-candy-cane",
+                foto: "lurdinha2.png",
+                fotoCard: "lurdinha1.png",
+                historia: "Lourdes Neres, carinhosamente conhecida como Lurdinha, é uma mulher cuja trajetória mostra que a culinária pode ser muito mais do que uma profissão: pode ser uma poderosa ferramenta de transformação social. Em Três Lagoas, seu trabalho se destaca pelo compromisso com a comunidade e pelo desejo de abrir caminhos para quem mais precisa de oportunidades.",
+                especialidades: ["Doce de Jaracatiá em Calda", "Compota de Pequi Doce", "Furrundu Pantaneiro Tradicional"],
+                instagram: "@lourdes.neres"
+            },
+            {
+                nome: "Rosa & Filhas",
+                negocio: "Empadão da Terra",
+                cidade: "Três Lagoas - MS",
+                prato: "Empadão Pantaneiro de Pequi",
+                desc: "Massa podre artesanal recheada com frango e frutos do cerrado.",
+                cor: "from-orange-500 to-rose-600",
+                icone: "fa-pie-chart",
+                foto: "https://images.unsplash.com/photo-1621236378699-8597faf6a176?auto=format&fit=crop&w=900&q=80",
+                historia: "Iniciativa familiar de mãe e filhas em Três Lagoas. Elas desenvolveram uma massa especial que derrete na boca, recheada com frango caipira, pequi desfiado e queijo minas curado, unindo sabor e afeto.",
+                especialidades: ["Empadão Pantaneiro com Pequi", "Torta de Carne Seca com Mandioca", "Empada Doce de Doce de Leite"],
+                instagram: "@empadaodaterra_tl"
+            },
+            {
+                nome: "Ana Paula Cervejaria",
+                negocio: "Sabor de MS Alambiques",
+                cidade: "Dourados - MS",
+                prato: "Licores Artesanais & Cerveja de Baru",
+                desc: "Inovação e brasilidade combinadas em bebidas exclusivas.",
+                cor: "from-yellow-500 to-amber-700",
+                icone: "fa-wine-bottle",
+                foto: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80",
+                historia: "Ana Paula é engenheira de alimentos e mestre cervejeira em Dourados. Ela utiliza a riqueza dos ingredientes nativos de MS para produzir cervejas artesanais amadurecidas com castanha de baru e licores destilados em alambique de cobre.",
+                especialidades: ["Cerveja Artesanal de Baru", "Licor Cremoso de Guavira", "Cachaça Envelhecida Regional"],
+                instagram: "@sabordems_alambiques"
+            },
+            {
+                nome: "Juliana Peixaria",
+                negocio: "Sabor Pantaneiro",
+                cidade: "Aquidauana - MS",
+                prato: "Peixe a Urucum e Pacu Assado",
+                desc: "Pescados frescos dos rios de MS com receitas autênticas.",
+                cor: "from-cyan-600 to-blue-700",
+                icone: "fa-fish",
+                foto: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=900&q=80",
+                historia: "Na entrada do Pantanal em Aquidauana, Juliana comanda a cozinha especializada em peixes de água doce. Seu Peixe a Urucum é gratinado com molho cremoso de urucum e queijo muçarela, atração gastronômica imperdível.",
+                especialidades: ["Filé de Pintado a Urucum", "Pacu Assado Recheado", "Costelinha de Pacu Crocante"],
+                instagram: "@saborpantaneiro_aquidauana"
+            },
+            {
+                nome: "Marta Rocha",
+                negocio: "Quibes & Salgados MS",
+                cidade: "Coxim - MS",
+                prato: "Quibe de Mandioca com Carne Seca",
+                desc: "Massa crocante à base de mandioca regional bem temperada.",
+                cor: "from-fuchsia-600 to-pink-600",
+                icone: "fa-cookie-bite",
+                foto: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=900&q=80",
+                historia: "Em Coxim, Marta revolucionou os salgados ao trocar a farinha de trigo tradicional pela mandioca amarela cozida da região. O resultado é um quibe dourado, leve por dentro e super crocante por fora.",
+                especialidades: ["Quibe de Mandioca com Carne Seca", "Coxinha de Mandioca com Frango", "Bolinho de Mandioca com Queijo"],
+                instagram: "@quibesms_coxim"
+            }
+        ];
+
+        // Perguntas da Trilha do Aprendizado (14 Etapas)
+        const quizQuestions = [
+            {
+                num: 1,
+                titulo: "Patrimônio de Campo Grande",
+                pergunta: "Qual é o prato de origem japonesa, adaptado em MS, considerado Patrimônio Imaterial de Campo Grande?",
+                opcoes: ["Sobá", "Rámen", "Yakisoba", "Udon"],
+                correta: 0
+            },
+            {
+                num: 2,
+                titulo: "Fruta Símbolo do Estado",
+                pergunta: "Qual é a fruta nativa do Cerrado/Pantanal muito usada em geleias e declarada fruto símbolo de MS?",
+                opcoes: ["Pitanga", "Guavira", "Jabuticaba", "Açaí"],
+                correta: 1
+            },
+            {
+                num: 3,
+                titulo: "Biscoito de Polvilho e Queijo",
+                pergunta: "Como se chama o famoso biscoito de polvilho e queijo em formato de herradura, de origem paraguaia?",
+                opcoes: ["Pão de Queijo", "Biscoito Frito", "Chipa", "Peta"],
+                correta: 2
+            },
+            {
+                num: 4,
+                titulo: "Bolo Salgado Paraguaio",
+                pergunta: "Qual prato tradicional de MS é um 'bolo salgado' feito com milho, queijo, cebola e leite?",
+                opcoes: ["Pamonha Salgada", "Sopa Paraguaia", "Curau", "Empadão"],
+                correta: 1
+            },
+            {
+                num: 5,
+                titulo: "Linguiça com Indicação Geográfica",
+                pergunta: "Qual cidade sul-mato-grossense é famosa nacionalmente por sua Linguiça com indicação geográfica?",
+                opcoes: ["Maracaju", "Bonito", "Corumbá", "Dourados"],
+                correta: 0
+            },
+            {
+                num: 6,
+                titulo: "Peixe Típico do Pantanal",
+                pergunta: "O prato gratinado feito com filé de pintado, molho de tomate, urucum e queijo se chama:",
+                opcoes: ["Moqueca Pantaneira", "Peixe a Urucum", "Pintado ao Molho", "Tucunaré Frito"],
+                correta: 1
+            },
+            {
+                num: 7,
+                titulo: "Castanha do Cerrado",
+                pergunta: "Qual castanha nativa do Cerrado de MS é riquíssima em nutrientes e usada em bolos e licores?",
+                opcoes: ["Castanha do Pará", "Baru", "Noz Pecã", "Macadâmia"],
+                correta: 1
+            },
+            {
+                num: 8,
+                titulo: "Bebida Típica Gelada",
+                pergunta: "Qual bebida gelada à base de erva-mate é símbolo oficial do estado de Mato Grosso do Sul?",
+                opcoes: ["Chimarrão", "Chá Mate Quente", "Tereré", "Suco de Guavira"],
+                correta: 2
+            },
+            {
+                num: 9,
+                titulo: "Coloral Natural do Pantanal",
+                pergunta: "Qual ingrediente natural avermelhado dá cor e sabor característico ao Peixe a Urucum?",
+                opcoes: ["Colorau/Urucum", "Açafrão", "Ppáprica", "Pimenta Calabresa"],
+                correta: 0
+            },
+            {
+                num: 10,
+                titulo: "Prato de Comitiva Pantaneira",
+                pergunta: "Qual prato servido nas comitivas pantaneiras é feito de arroz misturado com carne seca e temperos?",
+                opcoes: ["Baião de Dois", "Galinhada", "Arroz de Carreteiro", "Risoto de Carne"],
+                correta: 2
+            },
+            {
+                num: 11,
+                titulo: "Fruto Aromático do Cerrado",
+                pergunta: "Fruto de cor amarela com caroço espinhoso e sabor marcante muito usado na culinária regional:",
+                opcoes: ["Umbu", "Pequi", "Cajá", "Mangaba"],
+                correta: 1
+            },
+            {
+                num: 12,
+                titulo: "Ingrediente Base para Farofa",
+                pergunta: "Qual raiz é a base principal da Farofa Pantaneira e do famoso Quibe Frito regional?",
+                opcoes: ["Batata Doce", "Mandioca", "Inhame", "Cará"],
+                correta: 1
+            },
+            {
+                num: 13,
+                titulo: "Tradição das Feiras Livres",
+                pergunta: "Qual local é o principal ponto de encontro da comunidade para saborear o Sobá na capital?",
+                opcoes: ["Feira Central (Feirona)", "Feira da Bolívia", "Mercado Municipal", "Praça das Araras"],
+                correta: 0
+            },
+            {
+                num: 14,
+                titulo: "Grande Final da Trilha",
+                pergunta: "Qual é o pilar mais importante do empreendedorismo feminino na gastronomia de MS?",
+                opcoes: ["Concorrência predatória", "União, valorização da cultura e inovação local", "Trabalhar sem planejamento", "Usar apenas produtos importados"],
+                correta: 1
+            }
+        ];
+
+        // Estado do Jogo
+        let unlockedTile = 1; // De 1 a 14
+        let activeQuizIndex = null;
+
+        // Navegação entre Páginas SPA
+        function navigateTo(page) {
+            const pageHome = document.getElementById('page-home');
+            const pageTeste = document.getElementById('page-teste');
+            const btnHome = document.getElementById('nav-btn-home');
+            const btnTeste = document.getElementById('nav-btn-teste');
+
+            if (page === 'home') {
+                pageHome.classList.remove('hidden-page');
+                pageTeste.classList.add('hidden-page');
+                btnHome.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 bg-pink-50 text-pink-700 border border-pink-200";
+                btnTeste.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 bg-amber-400 hover:bg-amber-300 text-amber-950 shadow-sm";
+            } else if (page === 'teste') {
+                pageHome.classList.add('hidden-page');
+                pageTeste.classList.remove('hidden-page');
+                btnHome.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 text-gray-600 hover:bg-gray-100";
+                btnTeste.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 bg-pink-600 text-white shadow-md";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Renderizar Carrossel dos 9 Flyers
+        function renderFlyers() {
+            const container = document.getElementById('carousel');
+            container.innerHTML = flyersData.map((item, idx) => {
+                const nomeExibicao = item.nome || "Indefinido";
+                return `
+                <div class="flyer-card snap-center flex-shrink-0 bg-slate-900 rounded-3xl p-5 sm:p-6 text-white shadow-xl flex flex-col justify-between relative overflow-hidden group border-2 border-white/20">
+                    
+                    <!-- Imagem da Empreendedora como Fundo -->
+                    <img src="${item.fotoCard || item.foto}" alt="${nomeExibicao}" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-300" onerror="this.style.display='none'">
+                    
+                    <!-- Degradê Preto Sutil que vem do fundo -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+                    <!-- Topo: Ícone no Canto Superior Direito -->
+                    <div class="flex items-center justify-end z-10">
+                        <div class="w-9 h-9 rounded-xl bg-black/40 flex items-center justify-center text-white border border-white/20">
+                            <i class="fa-solid ${item.icone} text-sm sm:text-base"></i>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo Central: Apenas o Nome -->
+                    <div class="z-10 my-auto pt-10 text-center">
+                        <h3 class="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight drop-shadow-md">
+                            ${nomeExibicao}
+                        </h3>
+                    </div>
+
+                    <!-- Botão de Ação: VER MAIS -->
+                    <div class="z-10 pt-3">
+                        <button onclick="openEntrepreneurModal(${idx})" class="w-full bg-white hover:bg-pink-100 text-gray-900 font-extrabold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition-all cursor-pointer">
+                            <i class="fa-solid fa-circle-info text-pink-600 text-base"></i>
+                            <span>Ver mais</span>
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // Abrir Modal com mais detalhes da Empreendedora (HUD Ver Mais)
+        function openEntrepreneurModal(index) {
+            const emp = flyersData[index];
+            if (!emp) return;
+
+            document.getElementById('modal-emp-negocio').innerText = emp.negocio;
+            document.getElementById('modal-emp-nome').innerText = `Por: ${emp.nome}`;
+            document.getElementById('modal-emp-cidade').innerHTML = `<i class="fa-solid fa-location-dot mr-1"></i> ${emp.cidade}`;
+            document.getElementById('modal-emp-historia').innerText = emp.historia;
+            document.getElementById('modal-emp-foto').src = emp.fotoSobre || emp.foto;
+            document.getElementById('modal-emp-instagram').innerHTML = `<i class="fa-brands fa-instagram mr-1"></i> ${emp.instagram}`;
+
+            document.getElementById('entrepreneur-modal').classList.remove('hidden');
+        }
+
+        function closeEntrepreneurModal() {
+            document.getElementById('entrepreneur-modal').classList.add('hidden');
+        }
+
+        // Navegação do Carrossel
+        function scrollCarousel(dir) {
+            const container = document.getElementById('carousel');
+            const cardWidth = container.querySelector('.flyer-card')?.offsetWidth || 300;
+            container.scrollBy({ left: dir * (cardWidth + 24), behavior: 'smooth' });
+        }
+
+        // Renderizar Tabuleiro das 14 Casas
+        function renderGameBoard() {
+            const grid = document.getElementById('game-board-grid');
+            grid.innerHTML = quizQuestions.map((q, idx) => {
+                const step = idx + 1;
+                let statusClass = "locked bg-gray-200 border-gray-300 text-gray-400";
+                let statusIcon = '<i class="fa-solid fa-lock text-xs"></i>';
+
+                if (step < unlockedTile) {
+                    statusClass = "completed font-bold shadow-md";
+                    statusIcon = '<i class="fa-solid fa-check text-xs"></i>';
+                } else if (step === unlockedTile) {
+                    statusClass = "active-playable bg-gradient-to-tr from-pink-500 to-rose-600 text-white border-pink-400 font-extrabold shadow-lg cursor-pointer";
+                    statusIcon = '<i class="fa-solid fa-play text-xs"></i>';
+                }
+
+                return `
+                    <div onclick="openQuiz(${idx})" class="board-tile ${statusClass} rounded-2xl p-3 sm:p-4 border-2 flex flex-col justify-between items-center text-center aspect-square relative group">
+                        <div class="flex items-center justify-between w-full text-[10px]">
+                            <span class="font-game">Nível ${step}</span>
+                            <span>${statusIcon}</span>
+                        </div>
+                        <div class="my-auto">
+                            <span class="text-lg sm:text-2xl font-game font-bold block">${step}</span>
+                        </div>
+                        <span class="text-[9px] truncate max-w-full opacity-90 font-medium">${q.titulo}</span>
+                    </div>
+                `;
+            }).join('');
+
+            // Atualizar contadores
+            document.getElementById('game-progress-text').innerText = `${unlockedTile - 1} / 14`;
+            const pct = Math.min(100, Math.round(((unlockedTile - 1) / 14) * 100));
+            document.getElementById('game-progress-bar').style.width = `${pct}%`;
+
+            if (unlockedTile > 14) {
+                document.getElementById('victory-banner').classList.remove('hidden');
+                document.getElementById('game-progress-text').innerText = `14 / 14 (Concluído!)`;
+            } else {
+                document.getElementById('victory-banner').classList.add('hidden');
+            }
+        }
+
+        // Abrir Modal da Pergunta
+        function openQuiz(index) {
+            const step = index + 1;
+            if (step > unlockedTile) return; // Bloqueado
+
+            activeQuizIndex = index;
+            const q = quizQuestions[index];
+
+            document.getElementById('modal-tile-num').innerText = step;
+            document.getElementById('modal-tile-title').innerText = q.titulo;
+            document.getElementById('modal-question-text').innerText = q.pergunta;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+
+            const optionsContainer = document.getElementById('modal-options-container');
+            optionsContainer.innerHTML = q.opcoes.map((opt, optIdx) => `
+                <button onclick="checkAnswer(${optIdx})" class="w-full text-left p-3.5 rounded-2xl border-2 border-gray-200 hover:border-pink-500 hover:bg-pink-50 font-semibold text-xs sm:text-sm transition-all flex items-center justify-between group">
+                    <span>${opt}</span>
+                    <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-pink-600 text-xs"></i>
+                </button>
+            `).join('');
+
+            document.getElementById('quiz-modal').classList.remove('hidden');
+        }
+
+        // Checar Resposta do Quiz
+        function checkAnswer(selectedOption) {
+            const q = quizQuestions[activeQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+
+            if (selectedOption === q.correta) {
+                feedback.className = "mt-4 text-xs text-center font-bold text-emerald-600 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 block";
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Resposta Correta! Avançando...';
+                
+                setTimeout(() => {
+                    if (activeQuizIndex + 1 === unlockedTile && unlockedTile <= 14) {
+                        unlockedTile++;
+                    }
+                    closeQuizModal();
+                    renderGameBoard();
+                }, 900);
+
+            } else {
+                feedback.className = "mt-4 text-xs text-center font-bold text-rose-600 bg-rose-50 p-2.5 rounded-xl border border-rose-200 block";
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> Resposta Incorreta. Tente novamente!';
+            }
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function resetGameProgress() {
+            unlockedTile = 1;
+            renderGameBoard();
+        }
+
+        // Processar Teste de Aptidão
+        function calculateAptitude(event) {
+            event.preventDefault();
+            const form = document.getElementById('aptitude-form');
+            const formData = new FormData(form);
+
+            let score = 0;
+            for (let [key, value] of formData.entries()) {
+                score += parseInt(value, 10);
+            }
+
+            const titleEl = document.getElementById('result-title');
+            const scoreEl = document.getElementById('result-score');
+            const descEl = document.getElementById('result-description');
+            const iconEl = document.getElementById('result-icon');
+
+            scoreEl.innerText = `${score} / 30 Pontos`;
+
+            if (score >= 24) {
+                titleEl.innerText = "Perfil Empreendedora Nata!";
+                iconEl.className = "w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl shadow-lg mb-4";
+                iconEl.innerHTML = '<i class="fa-solid fa-crown"></i>';
+                descEl.innerText = "Você demonstra excelente visão estratégica, alta resiliência e forte apreço pela cultura gastronômica de Mato Grosso do Sul. Seu negócio tem um potencial gigante para se destacar e prosperar!";
+            } else if (score >= 16) {
+                titleEl.innerText = "Perfil Empreendedora em Expansão";
+                iconEl.className = "w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center text-3xl shadow-lg mb-4";
+                iconEl.innerHTML = '<i class="fa-solid fa-seedling"></i>';
+                descEl.innerText = "Você tem ótimas ideias e dedicação! Com um pouco mais de organização financeira, precificação rigorosa e planejamento para imprevistos, seu empreendimento alcançará um novo patamar.";
+            } else {
+                titleEl.innerText = "Perfil Aprendiz Gastronômica";
+                iconEl.className = "w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center text-3xl shadow-lg mb-4";
+                iconEl.innerHTML = '<i class="fa-solid fa-book-open"></i>';
+                descEl.innerText = "Você tem amor pela culinária! O próximo passo é investir em capacitação sobre gestão financeira e atendimento ao cliente para transformar essa paixão em um negócio sustentável.";
+            }
+
+            document.getElementById('result-modal').classList.remove('hidden');
+        }
+
+        function closeResultModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        // Inicialização ao carregar
+        window.onload = function() {
+            renderFlyers();
+            renderGameBoard();
+        };
+    </script>
+</body>
+</html>
